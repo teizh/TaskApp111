@@ -43,7 +43,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
-    <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+  <!--  <me.relex.circleindicator.CircleIndicator
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/black"
+        android:layout_gravity="center"
+        android:outlineSpotShadowColor="@color/black"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="547dp" />-->
+
+   <!-- <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
         android:id="@+id/spring_dots_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,7 +70,12 @@
         android:layout_gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_desc"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_desc"
+
+        />-->
+
+
+
 
     <Button
         android:id="@+id/btn_start"
