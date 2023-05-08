@@ -1,6 +1,6 @@
 package com.example.taskapp.model
 
-import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+
 
 
 class OnBoard(

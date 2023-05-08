@@ -1,32 +1,39 @@
 package com.example.taskapp.ui.profile
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.taskapp.R
+import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
+import com.example.taskapp.data.local.Pref
+import com.example.taskapp.databinding.FragmentProfileBinding
+
 
 class ProfileFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = ProfileFragment()
-    }
-
-    private lateinit var viewModel: ProfileViewModel
+    private lateinit var binding: FragmentProfileBinding
+    private lateinit var pref: Pref
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
+        return binding.root
+
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        pref = Pref(requireContext())
+        binding.etProfile.setText(pref.getUserName())
+        binding.etProfile.addTextChangedListener {
+            pref.saveUserName(binding.etProfile.text.toString())
+        }
+        /*   binding.profileImage.setCircleBackgroundColorResource(pref.getUserProfilePic())
+      binding.profileImage.setImageDrawable {
+             pref.saveUserProfilePic(binding.profileImage.int)
+         }*/
     }
-
 }
+

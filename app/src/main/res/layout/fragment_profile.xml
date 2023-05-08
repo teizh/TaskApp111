@@ -19,21 +19,15 @@
         android:layout_gravity="center"/>
 
 
+
+
     <EditText
         android:id="@+id/et_profile"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
         android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:textAlignment="center"
         android:hint="Enter Your Profile Name" />
-
-    <Button
-        android:id="@+id/btn_saveProfile"
-        android:layout_width="178dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="12dp"
-        android:gravity="center"
-        android:text="SAVE" />
 
 </LinearLayout>

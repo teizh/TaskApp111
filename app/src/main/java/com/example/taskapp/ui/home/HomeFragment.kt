@@ -5,17 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.setFragmentResultListener
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.taskapp.App
 import com.example.taskapp.R
 import com.example.taskapp.databinding.FragmentHomeBinding
 import com.example.taskapp.model.Task
 import com.example.taskapp.ui.home.adapter.TaskAdapter
-import com.example.taskapp.ui.task.TaskFragment
 
 class HomeFragment : Fragment() {
 
@@ -25,7 +21,7 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    private val adapter = TaskAdapter()
+    private val adapter = TaskAdapter(onLongClick = this::onLongClick)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,13 +40,19 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.adapter = adapter
-        setFragmentResultListener(TaskFragment.TASK_REQUEST) { _, bundle ->
+        /*setFragmentResultListener(TaskFragment.TASK_REQUEST) { _, bundle ->
             val result = bundle.getSerializable(TaskFragment.TASK_KEY) as Task
             Log.e("ololo", "onViewCreated: $result")
             adapter.addTask(result)
-        }
+        }*/
+        val list = App.db.taskDao().getAll()
+        adapter.addTasks(list)
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.taskFragment)
         }
+    }
+
+    private fun onLongClick(task: Task) {
+        Log.e("ololo", "onLongClick: ")
     }
 }

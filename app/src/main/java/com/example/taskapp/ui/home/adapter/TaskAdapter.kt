@@ -1,15 +1,15 @@
 package com.example.taskapp.ui.home.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.taskapp.databinding.ItemTaskBinding
 import com.example.taskapp.model.Task
-import com.example.taskapp.ui.home.HomeFragment
+import kotlin.reflect.KFunction1
 
-class TaskAdapter : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(private val onLongClick: KFunction1<Task, Unit>) :
+    RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     private val data = arrayListOf<Task>()
 
@@ -17,7 +17,13 @@ class TaskAdapter : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     fun addTask(task: Task) {
         data.add(task)
-      notifyDataSetChanged()
+        notifyDataSetChanged()
+    }
+
+    fun addTasks(task: List<Task>) {
+        data.clear()
+        data.addAll(task)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
@@ -38,10 +44,14 @@ class TaskAdapter : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
         holder.bind(data[position])
     }
 
-    class TaskViewHolder(private val binding: ItemTaskBinding) : ViewHolder(binding.root) {
+    inner class TaskViewHolder(private val binding: ItemTaskBinding) : ViewHolder(binding.root) {
         fun bind(task: Task) {
             binding.tvTitle.text = task.title
             binding.tvDesc.text = task.desc
+            binding.root.setOnLongClickListener {
+                onLongClick(task)
+                false
+            }
         }
     }
 
