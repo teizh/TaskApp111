@@ -20,8 +20,8 @@ class Pref(private val context: Context) {
 
     fun getUserName ():String?= pref.getString(USER_NAME_KEY, "")
 
-    fun saveUserProfilePic (pic:Int){
-        pref.edit().putInt(USER_PIC_KEY, pic).apply()
+    fun saveProfileImage (pic: String){
+        pref.edit().putString(USER_PIC_KEY, pic).apply()
     }
     fun getUserProfilePic ():Int?=pref.getInt(   USER_PIC_KEY, 1)
 
