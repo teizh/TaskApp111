@@ -1,5 +1,7 @@
 package com.example.taskapp.ui.home
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -42,14 +44,30 @@ class HomeFragment : Fragment() {
             Log.e("ololo", "onViewCreated: $result")
             adapter.addTask(result)
         }*/
-        val list = App.db.taskDao().getAll()
-        adapter.addTasks(list)
+        setData()
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.taskFragment)
         }
     }
 
     private fun onLongClick(task: Task) {
-        Log.e("ololo", "onLongClick: ")
+        val alertDialog = AlertDialog.Builder(requireContext())
+        alertDialog.setTitle("Do you want to delete info?")
+        alertDialog.setNegativeButton("No", object : DialogInterface.OnClickListener {
+            override fun onClick(dialog: DialogInterface?, which: Int) {
+                dialog?.cancel()
+            }
+        })
+        alertDialog.setPositiveButton("Yes", object : DialogInterface.OnClickListener {
+            override fun onClick(dialog: DialogInterface?, which: Int) {
+                App.db.taskDao().delete(task)
+                setData()
+            }
+        })
+        alertDialog.create().show()
+    }
+    private fun setData(){
+        val list = App.db.taskDao().getAll()
+        adapter.addTasks(list)
     }
 }
