@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
 
         if (!pref.isUserSeen())
-
         navController.navigate(R.id.onBoardingFragment)
 
         val appBarConfiguration = AppBarConfiguration(

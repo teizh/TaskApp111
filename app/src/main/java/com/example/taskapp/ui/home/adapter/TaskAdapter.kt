@@ -8,7 +8,8 @@ import com.example.taskapp.databinding.ItemTaskBinding
 import com.example.taskapp.model.Task
 import kotlin.reflect.KFunction1
 
-class TaskAdapter(private val onLongClick: KFunction1<Task, Unit>) :
+//class TaskAdapter(private val onLongClick: KFunction1<Task, Unit>) :
+class TaskAdapter(private val onLongClick: KFunction1<Task, Unit>,  private val onClick: (Task) -> Unit) :
     RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     private val data = arrayListOf<Task>()
@@ -50,6 +51,10 @@ class TaskAdapter(private val onLongClick: KFunction1<Task, Unit>) :
             binding.tvDesc.text = task.desc
             binding.root.setOnLongClickListener {
                 onLongClick(task)
+                false
+            }
+            binding.root.setOnClickListener {
+                onClick(task)
                 false
             }
         }

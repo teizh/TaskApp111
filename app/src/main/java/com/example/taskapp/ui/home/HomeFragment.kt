@@ -20,7 +20,9 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val adapter = TaskAdapter(onLongClick = this::onLongClick)
+    private val adapter = TaskAdapter(onLongClick = this::onLongClick, onClick = this::onClick)
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,6 +67,12 @@ class HomeFragment : Fragment() {
             }
         })
         alertDialog.create().show()
+    }
+
+    private fun onClick(task: Task) {
+        Log.e("123", "onClick ")
+        findNavController().navigate(R.id.taskFragment)
+
     }
     private fun setData(){
         val list = App.db.taskDao().getAll()
