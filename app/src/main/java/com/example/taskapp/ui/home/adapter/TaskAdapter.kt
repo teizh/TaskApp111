@@ -48,16 +48,19 @@ class TaskAdapter(private val onLongClick: KFunction1<Task, Unit>,  private val 
     inner class TaskViewHolder(private val binding: ItemTaskBinding) : ViewHolder(binding.root) {
         fun bind(task: Task) {
             binding.tvTitle.text = task.title
-            binding.tvDesc.text = task.desc
+            binding.tvDesc.text = task.desc1
+
             binding.root.setOnLongClickListener {
                 onLongClick(task)
                 false
             }
+
             binding.root.setOnClickListener {
                 onClick(task)
                 false
             }
         }
+
     }
 
 }

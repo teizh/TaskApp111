@@ -74,6 +74,12 @@ class HomeFragment : Fragment() {
         findNavController().navigate(R.id.taskFragment)
 
     }
+
+
+
+
+
+
     private fun setData(){
         val list = App.db.taskDao().getAll()
         adapter.addTasks(list)

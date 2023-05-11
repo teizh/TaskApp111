@@ -19,7 +19,11 @@ interface TaskDao {
     @Delete
     fun delete(task: Task)
 
-    @Update
-    fun update(task: Task)
+
+
+/*    @Query("UPDATE task set title=:titleUpdated,desc1=:descUpdated WHERE id LIKE :idUpdated")
+    fun update(titleUpdated:String, descUpdated:String, idUpdated:Int)*/
+   @Update
+   fun update(  task: Task)
 
 }
