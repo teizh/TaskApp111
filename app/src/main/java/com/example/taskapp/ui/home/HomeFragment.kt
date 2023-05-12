@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.taskapp.App
@@ -21,7 +22,6 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val adapter = TaskAdapter(onLongClick = this::onLongClick, onClick = this::onClick)
-
 
 
     override fun onCreateView(
@@ -41,11 +41,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.adapter = adapter
-        /*setFragmentResultListener(TaskFragment.TASK_REQUEST) { _, bundle ->
-            val result = bundle.getSerializable(TaskFragment.TASK_KEY) as Task
-            Log.e("ololo", "onViewCreated: $result")
-            adapter.addTask(result)
-        }*/
         setData()
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.taskFragment)
@@ -71,16 +66,12 @@ class HomeFragment : Fragment() {
 
     private fun onClick(task: Task) {
         Log.e("123", "onClick ")
-        findNavController().navigate(R.id.taskFragment)
-
+        val directions = HomeFragmentDirections.actionNavigationHomeToTaskFragment2(task)
+        findNavController().navigate(directions)
     }
 
 
-
-
-
-
-    private fun setData(){
+    private fun setData() {
         val list = App.db.taskDao().getAll()
         adapter.addTasks(list)
     }

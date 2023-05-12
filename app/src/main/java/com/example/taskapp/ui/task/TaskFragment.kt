@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.room.Update
 import com.example.taskapp.App
 import com.example.taskapp.model.Task
 import com.example.taskapp.databinding.FragmentTaskBinding
@@ -15,10 +14,11 @@ import com.example.taskapp.databinding.FragmentTaskBinding
 
 class TaskFragment : Fragment() {
     private lateinit var binding: FragmentTaskBinding
-    private var task: Task? = null
-//val args:TaskFragment by navArgs()
-  private lateinit var navArgs: TaskFragmentArgs
-    //private lateinit var navArgs: TaskFragment
+    private var task1: Task? = null
+    private lateinit var navArgs: TaskFragmentArgs
+    private val bundle = arguments
+    private val args = bundle?.let { TaskFragmentArgs.fromBundle(it) }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,51 +31,40 @@ class TaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             navArgs = TaskFragmentArgs.fromBundle(it)
-            task = navArgs.task
+            task1 = navArgs.task
         }
-        if (task != null){
-            binding.etTitle.setText(task?.title)
-            binding.etDescription.setText(task?.desc1)
+        if (task1 != null) {
+            binding.etTitle.setText(args?.task?.title)
+            binding.etDescription.setText(args?.task?.title)
             binding.btnSave.text = "Update"
-        }else{
+        }else {
             binding.btnSave.text = "Save"
         }
+
         binding.btnSave.setOnClickListener {
             Log.e("uuu", "item opened")
-            Log.i("uuu", "playerString")
-            if(task!= null){
+            if (task1 != null) {
                 update()
-            }//else save()
+            } else save()
         }
 
     }
 
     private fun save() {
+        Log.i("uuu", "string saved")
         val data = Task(
             title = binding.etTitle.text.toString(),
             desc1 = binding.etDescription.text.toString()
         )
         App.db.taskDao().insert(data)
-        //setFragmentResult(TASK_REQUEST, bundleOf(TASK_KEY to data))
         findNavController().navigateUp()
     }
 
     private fun update() {
-
-        //binding.etTitle.text.clear()
-        //binding.etDescription.text.clear()
-        /*  App.db.taskDao().update(
-             titleUpdated = binding.etTitle.text.toString(),
-             descUpdated = binding.etDescription.text.toString(),
-             idUpdated = id
-         )*/
-
-        task?.title = binding.etTitle.text.toString()
-        task?.desc1 = binding.etDescription.text.toString()
-
-      //  task?.let { App.db.taskDao().delete(it) }
+        task1?.title = binding.etTitle.text.toString()
+        task1?.desc1 = binding.etDescription.text.toString()
+        task1?.let { App.db.taskDao().update(it) }
         findNavController().navigateUp()
-        Log.e("123", "updating")
     }
 
     companion object {
