@@ -14,8 +14,7 @@ class TaskAdapter(private val onLongClick: KFunction1<Task, Unit>,  private val 
 
     private val data = arrayListOf<Task>()
 
-    //@SuppressLint("NotifyDataSetChanged")
-
+//@SuppressLint("NotifyDataSetChanged")
     fun addTask(task: Task) {
         data.add(task)
         notifyDataSetChanged()
@@ -60,7 +59,5 @@ class TaskAdapter(private val onLongClick: KFunction1<Task, Unit>,  private val 
                 false
             }
         }
-
     }
-
 }

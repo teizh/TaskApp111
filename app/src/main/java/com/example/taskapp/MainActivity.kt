@@ -1,5 +1,6 @@
 package com.example.taskapp
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -10,12 +11,14 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.taskapp.data.local.Pref
 import com.example.taskapp.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var pref: Pref
-
+    private lateinit var auth: FirebaseAuth
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -23,12 +26,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         pref = Pref(this)
         val navView: BottomNavigationView = binding.navView
+        auth = FirebaseAuth.getInstance()
+
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
 
         if (!pref.isUserSeen())
         navController.navigate(R.id.onBoardingFragment)
+
+        if (auth.currentUser?.uid == null) {
+            navController.navigate(R.id.authFragment)
+        }
+
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -36,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_notifications, R.id.taskFragment, R.id.navigation_profile
             )
         )
-        navController.addOnDestinationChangedListener { _, destination, arguments ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.onBoardingFragment) {
                 navView.isVisible = false
                 supportActionBar?.hide()

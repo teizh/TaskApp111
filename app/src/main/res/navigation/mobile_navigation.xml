@@ -59,4 +59,18 @@
         android:name="com.example.taskapp.ui.onBoard.OnBoardingFragment"
         android:label="fragment_on_boarding"
         tools:layout="@layout/fragment_on_boarding" />
+    <fragment
+        android:id="@+id/acceptCodeFragment"
+        android:name="io.muhsin.taskapp.ui.auth.accept.AcceptCodeFragment"
+        android:label="AcceptCodeFragment" />
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="com.example.taskapp.ui.auth.AuthFragment"
+        android:label="fragment_auth"
+        tools:layout="@layout/fragment_auth" />
+    <fragment
+        android:id="@+id/verifyNumberFragment"
+        android:name="com.example.taskapp.ui.auth.verify.VerifyNumberFragment"
+        android:label="fragment_verify_number"
+        tools:layout="@layout/fragment_verify_number" />
 </navigation>

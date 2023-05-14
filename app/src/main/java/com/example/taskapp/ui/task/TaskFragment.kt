@@ -10,8 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.taskapp.App
 import com.example.taskapp.model.Task
 import com.example.taskapp.databinding.FragmentTaskBinding
-
-
 class TaskFragment : Fragment() {
     private lateinit var binding: FragmentTaskBinding
     private var task1: Task? = null
@@ -47,7 +45,6 @@ class TaskFragment : Fragment() {
                 update()
             } else save()
         }
-
     }
 
     private fun save() {
